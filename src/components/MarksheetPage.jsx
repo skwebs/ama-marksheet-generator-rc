@@ -180,7 +180,7 @@ export default function MarksheetPage({
                   <th className="px-3 py-2 text-left">Subjects</th>
                   <th className="px-3 py-2">Full Marks</th>
                   <th className="px-3 py-2">Written</th>
-                  <th className="px-3 py-2">Oral</th>
+                  {/* <th className="px-3 py-2">Oral</th> */}
                   <th className="px-3 py-2">Total</th>
                   <th className="px-3 py-2">Grade</th>
                 </tr>
@@ -193,7 +193,7 @@ export default function MarksheetPage({
                     </th>
                     <td className="px-3 py-2">{sub.full || "—"}</td>
                     <td className="px-3 py-2">{sub.written || "—"}</td>
-                    <td className="px-3 py-2">{sub.oral || "—"}</td>
+                    {/* <td className="px-3 py-2">{sub.oral || "—"}</td> */}
                     <td className="px-3 py-2">{sub.total || "—"}</td>
                     <td className="px-3 py-2">{sub.grade}</td>
                   </tr>
