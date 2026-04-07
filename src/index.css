@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ── Global font ─────────────────────────── */
+* {
+  font-family: Nunito, Roboto, Helvetica, Georgia, Arial, sans-serif,
+    'Comic Sans MS', Calibri;
+}
+
+/* ── A4 Sheet ────────────────────────────── */
+@page {
+  margin: 0;
+  size: A4;
+}
+
+.sheet {
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+  width: 210mm;
+  height: 297mm;
+}
+
+.sheet:last-of-type {
+  page-break-after: auto;
+}
+
+/* ── Watermark background ────────────────── */
+.main-content {
+  background: url('/assets/ama-128x128-0.15.webp') center / 60px 60px round;
+}
+
+/* ── Screen preview ──────────────────────── */
+@media screen {
+  #cards-container {
+    background: #e0e0e0;
+    padding: 8mm 0 12mm;
+  }
+
+  .sheet {
+    background: white;
+    box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
+    margin: 5mm auto;
+  }
+}
+
+/* ── Print ───────────────────────────────── */
+@media print {
+  body {
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .sheet {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    margin: 0;
+  }
+}
