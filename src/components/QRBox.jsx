@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react";
-import QRCode from "qrcode";
+import QRCodeStyling from "qr-code-styling";
 
-/**
- * QRBox — renders a QR code image for a student.
- * Uses the `qrcode` npm package (QRCode.toDataURL API).
- *
- * @param {{ student: object, session: string, totalObtained: number, totalFull: number, pct: string, overallGrade: string }} props
- */
+const LOGO = "/assets/ama300.webp";
+
 export default function QRBox({ student, session, totalObtained, totalFull, pct, overallGrade }) {
-  const imgRef = useRef(null);
+  const containerRef = useRef(null);
+  const qrRef = useRef(null);
 
   useEffect(() => {
-    const text = [
+    const container = containerRef.current;
+    if (!container) return;
+
+    const qrData = [
       `School: Anshu Memorial Academy`,
       `Name: ${student.name}`,
       `Father: ${student.father}`,
@@ -24,16 +24,47 @@ export default function QRBox({ student, session, totalObtained, totalFull, pct,
       `Grade: ${overallGrade}`,
     ].join("\n");
 
-    QRCode.toDataURL(text, { width: 200, margin: 1, color: { dark: "#000000", light: "#ffffff" } })
-      .then((url) => {
-        if (imgRef.current) imgRef.current.src = url;
-      })
-      .catch((err) => console.error("QR generation failed:", err));
+    const options = {
+      width: 300,
+      height: 300,
+      margin: 0, // ✅ top-level, not inside qrOptions
+      data: qrData,
+      image: LOGO, // ✅ no #Date.now() hash
+      qrOptions: {
+        errorCorrectionLevel: "H", // ✅ better for logo-embedded QRs
+      },
+      dotsOptions: {
+        color: "#000000",
+        type: "rounded",
+      },
+      backgroundOptions: {
+        color: "#ffffff",
+      },
+      imageOptions: {
+        crossOrigin: "anonymous",
+        margin: 0,
+        imageSize: 0.3,
+      },
+    };
+
+    if (qrRef.current) {
+      qrRef.current.update(options);
+    } else {
+      container.innerHTML = "";
+      qrRef.current = new QRCodeStyling(options);
+      qrRef.current.append(container);
+    }
+
+    // ✅ cleanup on dep change — prevents stale QR on hot re-renders
+    return () => {
+      container.innerHTML = "";
+      qrRef.current = null;
+    };
   }, [student, session, totalObtained, totalFull, pct, overallGrade]);
 
   return (
-    <div className='w-full aspect-square border border-black bg-white overflow-hidden flex items-center justify-center'>
-      <img ref={imgRef} className='w-full h-full' alt={`QR Code for ${student.name}`} />
+    <div className='size-50 border border-black bg-white overflow-hidden flex items-center justify-center'>
+      <div ref={containerRef} style={{ transform: "scale(0.67)", transformOrigin: "center" }} />
     </div>
   );
 }

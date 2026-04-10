@@ -1,6 +1,6 @@
 {
   "name": "ama-marksheet-generator-rc",
-   "private": true,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -10,11 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
     "exceljs": "^4.4.0",
     "papaparse": "^5.5.3",
-    "qrcode": "^1.5.4"
+    "qr-code-styling": "^1.9.2",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
